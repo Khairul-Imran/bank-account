@@ -5,44 +5,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankAccount {
-  private final String accountHolderName;
+  private final String name;
   private final String accountNumber;
-  private float accountBalance;
+  private Float balance;
   private List<String> transactions;
   private boolean closed = false;
   private LocalDate accountCreationDate;
   private LocalDate accountClosingDate;
 
   // Constructors
-  public BankAccount(String accountHolderName) {
-    this.accountHolderName = accountHolderName;
-    this.accountBalance = 0;
+  public BankAccount() {} // No-argument constructor. 
+
+  public BankAccount(String name) {
+    this.name = name;
+    this.balance = Float.valueOf((float)0);
   }
 
-  public BankAccount(String accountHolderName, float accountBalance) {
-    this.accountHolderName = accountHolderName;
-    this.accountBalance = accountBalance;
+  public BankAccount(String name, Float balance) {
+    this.name = name;
+    this.balance = balance;
   }
 
   // Methods
-  public void deposit(float depositAmount) {
-    // If account is closed or incorrect amount.
-    if (closed == true || depositAmount <= 0) {
+  public void deposit(Float depositAmount) {
+    if (closed == true || depositAmount <= 0) { // If account is closed or incorrect amount.
       throw new IllegalArgumentException("Incorrect deposit amount, or account is closed.");
     }
 
-    accountBalance += depositAmount;
+    balance += depositAmount;
     String transaction = "Deposit of $" + depositAmount + " at " + getCurrentDateTime();
     setTransactions(transaction);
   }
 
-  public void withdraw(float withdrawAmount) {
-    // If account is closed or incorrect amount.
+  public void withdraw(Float withdrawAmount) {
     if (closed == true || withdrawAmount <= 0) {
       throw new IllegalArgumentException("Incorrect deposit amount, or account is closed.");
     }
 
-    accountBalance -= withdrawAmount;
+    balance -= withdrawAmount;
     String transaction = "Withdrawal of $" + withdrawAmount + " at " + getCurrentDateTime();
     setTransactions(transaction);
   }
@@ -55,20 +55,20 @@ public class BankAccount {
   }
 
   // All getters and setters
-  public String getAccountHolderName() { // No setter for this
-    return accountHolderName;
+  public String getName() { // No setter for this
+    return name;
   }
   
   public String getAccountNumber() { // No setter for this
     return accountNumber;
   }
   
-  public float getAccountBalance() {
-    return accountBalance;
+  public Float getBalance() {
+    return balance;
   }
 
-  public void setAccountBalance(float accountBalance) {
-    this.accountBalance = accountBalance;
+  public void setBalance(Float balance) {
+    this.balance = balance;
   }
 
   public List<String> getTransactions() {
@@ -77,7 +77,7 @@ public class BankAccount {
 
   public void setTransactions(String newTransaction) { // Adds a new transaction.
     if (this.transactions == null) {
-      this.transactions = new ArrayList<>(); // For if transactions list is not initialised yet.
+      this.transactions = new ArrayList<>(); // For if the transactions list is not initialised yet.
     }
     this.transactions.add(newTransaction);
   }
