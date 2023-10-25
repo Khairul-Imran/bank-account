@@ -1,5 +1,5 @@
 public class FixedDepositAccount extends BankAccount{
-  private Float interest = Float.valueOf((float)3);
+  private Float interest = (float)3;
   private Integer duration = 6;
   private boolean wasInterestChanged = false;
   private boolean wasDurationChanged = false;

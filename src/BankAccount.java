@@ -3,10 +3,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BankAccount {
-  private final String name;
-  private final String accountNumber;
+  private String name; // Set once, cannot change.
+  private String accountNumber; // Set once, cannot change.
   private Float balance;
   private List<String> transactions;
   private boolean closed = false;
@@ -14,16 +15,28 @@ public class BankAccount {
   private LocalDate accountClosingDate;
 
   // Constructors
-  public BankAccount() {} // No-argument constructor. 
-
-  public BankAccount(String name) {
-    this.name = name;
-    this.balance = Float.valueOf((float)0);
-  }
-
   public BankAccount(String name, Float balance) {
     this.name = name;
     this.balance = balance;
+
+    Random random = new Random();
+    int randomAccountNumber = random.nextInt(1000000);
+    accountNumber = String.format("%06d", randomAccountNumber);
+  }
+
+  public BankAccount(String name) {
+    this(name, (float) 0);
+    // this.balance = (float) 0;
+
+    Random random = new Random();
+    int randomAccountNumber = random.nextInt(1000000);
+    accountNumber = String.format("%06d", randomAccountNumber);
+  }
+
+  public BankAccount() { // No-argument constructor. 
+    Random random = new Random();
+    int randomAccountNumber = random.nextInt(1000000);
+    accountNumber = String.format("%06d", randomAccountNumber);
   }
 
   // Methods
@@ -86,7 +99,7 @@ public class BankAccount {
     return closed;
   }
 
-  public void closeAccount() { // To actually close the account.
+  public void closeAccount() { // To actually close the account. Make it to call the closingDate
     closed = true;
   }
   
@@ -94,7 +107,7 @@ public class BankAccount {
     return accountCreationDate;
   }
 
-  public void setAccountCreationDate(LocalDate accountCreationDate) {
+  public void setAccountCreationDate(LocalDate accountCreationDate) { // Put at constructor?
     this.accountCreationDate = accountCreationDate;
   }
 
