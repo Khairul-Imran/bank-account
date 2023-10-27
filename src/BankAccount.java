@@ -19,6 +19,8 @@ public class BankAccount {
     this.name = name;
     this.balance = balance;
 
+    setAccountCreationDate();
+
     Random random = new Random();
     int randomAccountNumber = random.nextInt(1000000);
     accountNumber = String.format("%06d", randomAccountNumber);
@@ -26,7 +28,8 @@ public class BankAccount {
 
   public BankAccount(String name) {
     this(name, (float) 0);
-    // this.balance = (float) 0;
+
+    setAccountCreationDate();
 
     Random random = new Random();
     int randomAccountNumber = random.nextInt(1000000);
@@ -34,6 +37,9 @@ public class BankAccount {
   }
 
   public BankAccount() { // No-argument constructor. 
+    setAccountCreationDate();
+    setBalance((float)0);
+
     Random random = new Random();
     int randomAccountNumber = random.nextInt(1000000);
     accountNumber = String.format("%06d", randomAccountNumber);
@@ -41,7 +47,7 @@ public class BankAccount {
 
   // Methods
   public void deposit(Float depositAmount) {
-    if (closed == true || depositAmount <= 0) { // If account is closed or incorrect amount.
+    if (closed == true || depositAmount <= 0) {
       throw new IllegalArgumentException("Incorrect deposit amount, or account is closed.");
     }
 
@@ -99,7 +105,8 @@ public class BankAccount {
     return closed;
   }
 
-  public void closeAccount() { // To actually close the account. Make it to call the closingDate
+  public void closeAccount() { // To actually close the account.
+    setAccountClosingDate();
     closed = true;
   }
   
@@ -107,16 +114,32 @@ public class BankAccount {
     return accountCreationDate;
   }
 
-  public void setAccountCreationDate(LocalDate accountCreationDate) { // Put at constructor?
-    this.accountCreationDate = accountCreationDate;
+  public void setAccountCreationDate() { // Not really necessary, since constructor sets it already.
+    accountCreationDate = LocalDate.now();
   }
 
   public LocalDate getAccountClosingDate() {
     return accountClosingDate;
   }
 
-  public void setAccountClosingDate(LocalDate accountClosingDate) {
-    this.accountClosingDate = accountClosingDate;
+  public void setAccountClosingDate() {
+    accountClosingDate = LocalDate.now();
+  }
+
+  @Override
+  public String toString() {
+    if (closed == false) {
+      return name + "'s Bank Account:" +
+            "Date Created: " + accountCreationDate +
+            "Account Number: " + accountNumber +
+            "Balance: " + balance;
+    } else {
+      return name + "'s Bank Account:" +
+            "Date Closed: " + accountClosingDate +
+            "Account Number: " + accountNumber +
+            "Balance: " + balance;
+    }
+    
   }
 
 }

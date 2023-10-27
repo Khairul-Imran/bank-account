@@ -1,53 +1,68 @@
 import java.io.Console;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome to DBS!");
 
-        // Insert the various commands that the user can give. (only at the beginning)
+        // Insert the various commands that the user can give.
+        System.out.println("Available commands: open, close, status, withdraw, deposit, list, exit.");
 
         Console cons = System.console();
-
         boolean continueLoop = false;
-        String command = "";
-        String amount = "";
+        BankAccount mainBankAccount = new BankAccount("Bob", (float) 0);
 
         while (!continueLoop) {
-            String input = cons.readLine("> ");
-            Scanner scanner = new Scanner(input.toLowerCase());
+            String input = cons.readLine("> ").trim();
+            Scanner scanner = new Scanner(input.toLowerCase()).useDelimiter("\\s*,\\s*");
 
             switch (scanner.next()) {
-                case "open":
-                    // To show date the acount was opened, account number, account holder name
+                case "open": // Need to create a directory to store these.
+                    String name = scanner.next();
+                    Float openingBalance = Float.parseFloat(scanner.next());
+                    BankAccount newBankAccount = new BankAccount(name, openingBalance);
+                    System.out.println(newBankAccount);
                     break;
                 
                 case "close":
-                    // To show date the account was closed, account number, account holder name.
+                    mainBankAccount.closeAccount();
+                    System.out.println(mainBankAccount);
+                    break;
+
+                case "status":
+                    System.out.println(mainBankAccount);
                     break;
 
                 case "withdraw":
-                    // To show update balance, amount withdrew and at what time.
+                    String withdrawAmount = scanner.next();
+                    Float floatWithdrawAmount = Float.parseFloat(withdrawAmount);
+                    mainBankAccount.withdraw(floatWithdrawAmount);
                     break;
 
                 case "deposit":
-                    // To show update balance, amount deposited and at what time.
+                    String depositAmount = scanner.next();
+                    Float floatDepositAmount = Float.parseFloat(depositAmount);
+                    mainBankAccount.deposit(floatDepositAmount);
                     break;
 
-                case "list transactions":
-                    // Lists transactions.
+                case "list":
+                    List<String> transactions = mainBankAccount.getTransactions();
+                    for (String transaction : transactions) {
+                        System.out.println(transaction);
+                    }
                     break;
 
                 case "exit": 
-                    // Exits program.
+                    System.out.printf("Have a nice day!\n");
+                    continueLoop = true;
+                    scanner.close();
                     break;
 
                 default:
+                    System.out.printf("Invalid command. Available commands: open, close, withdraw, deposit, list, exit. \n");
                     break;
             }
-
         }
-
-
     }
 }
