@@ -73,7 +73,7 @@ public class BankAccount {
     return transactionTime.format(formatter);
   }
 
-  // All getters and setters
+  // Getters, setters and toString
   public String getName() { // No setter for this
     return name;
   }
@@ -91,21 +91,25 @@ public class BankAccount {
   }
 
   public List<String> getTransactions() {
+    if (transactions == null) {
+      throw new IllegalAccessError("No transactions have been made yet!"); // Not sure if this is the appropriate error to throw.
+    }
+    
     return transactions;
   }
 
   public void setTransactions(String newTransaction) { // Adds a new transaction.
     if (this.transactions == null) {
-      this.transactions = new ArrayList<>(); // For if the transactions list is not initialised yet.
+      this.transactions = new ArrayList<>();
     }
     this.transactions.add(newTransaction);
   }
 
-  public boolean isClosed() { // This method is like asking if the account is closed. Then you return true or false.
+  public boolean isClosed() { // To check if account is closed.
     return closed;
   }
 
-  public void closeAccount() { // To actually close the account.
+  public void closeAccount() { // To close the account.
     setAccountClosingDate();
     closed = true;
   }
@@ -114,7 +118,7 @@ public class BankAccount {
     return accountCreationDate;
   }
 
-  public void setAccountCreationDate() { // Not really necessary, since constructor sets it already.
+  public void setAccountCreationDate() {
     accountCreationDate = LocalDate.now();
   }
 
@@ -130,14 +134,14 @@ public class BankAccount {
   public String toString() {
     if (closed == false) {
       return name + "'s Bank Account:" +
-            "Date Created: " + accountCreationDate +
-            "Account Number: " + accountNumber +
-            "Balance: " + balance;
+            "\nDate Created: " + accountCreationDate +
+            "\nAccount Number: " + accountNumber +
+            "\nBalance: " + balance;
     } else {
       return name + "'s Bank Account:" +
-            "Date Closed: " + accountClosingDate +
-            "Account Number: " + accountNumber +
-            "Balance: " + balance;
+            "\nDate Closed: " + accountClosingDate +
+            "\nAccount Number: " + accountNumber +
+            "\nBalance: " + balance;
     }
     
   }

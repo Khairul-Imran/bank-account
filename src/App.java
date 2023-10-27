@@ -5,18 +5,21 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome to DBS!");
-
-        // Insert the various commands that the user can give.
         System.out.println("Available commands: open, close, status, withdraw, deposit, list, exit.");
 
         Console cons = System.console();
         boolean continueLoop = false;
+        
         BankAccount mainBankAccount = new BankAccount("Bob", (float) 0);
 
         while (!continueLoop) {
             String input = cons.readLine("> ").trim();
             Scanner scanner = new Scanner(input.toLowerCase()).useDelimiter("\\s*,\\s*");
 
+            //System.out.println(scanner.next());
+            //System.out.println(scanner.next());
+            //continueLoop = true;
+             
             switch (scanner.next()) {
                 case "open": // Need to create a directory to store these.
                     String name = scanner.next();
